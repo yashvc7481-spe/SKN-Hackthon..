@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Ambulance Traffic Management System</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo"><i class="fas fa-ambulance"></i> SATMS</div>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="#" onclick="showPage('home')" class="nav-link active">Home</a></li>
+        <li><a href="#" onclick="showPage('tracking')" class="nav-link">Track</a></li>
+        <li><a href="#" onclick="showPage('hospitals')" class="nav-link">Hospitals</a></li>
+        <li><a href="#" onclick="showPage('admin')" class="nav-link">Admin</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+
+  <div id="home-page" class="page active">
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1>Smart Ambulance Traffic Management System</h1>
+          <p>Save lives by reducing ambulance response time with intelligent traffic signal management.</p>
+          <div class="hero-buttons">
+            <a href="#" onclick="showPage('tracking')" class="btn btn-primary"><i class="fas fa-map-marker-alt"></i> Track Ambulance</a>
+            <a href="#features" class="btn btn-secondary"><i class="fas fa-chevron-down"></i> Learn More</a>
+          </div>
+        </div>
+        <div class="hero-image"><div class="ambulance-animation"><i class="fas fa-ambulance"></i></div></div>
+      </div>
+    </section>
+
+    <section class="problem-section">
+      <div class="container">
+        <h2>The Problem</h2>
+        <p>Ambulances often get stuck in traffic, delaying critical medical response.</p>
+        <div class="problem-stats">
+          <div class="stat-card"><h3>30%</h3><p>Traffic-related delays</p></div>
+          <div class="stat-card"><h3>5 mins</h3><p>Average delay</p></div>
+          <div class="stat-card"><h3>Lives</h3><p>Can be saved</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="features-section">
+      <div class="container">
+        <h2>Our Features</h2>
+        <div class="features-grid">
+          <div class="feature-card"><div class="feature-icon"><i class="fas fa-map"></i></div><h3>Live Tracking</h3><p>Real-time ambulance tracking</p></div>
+          <div class="feature-card"><div class="feature-icon"><i class="fas fa-traffic-light"></i></div><h3>Smart Signals</h3><p>Auto green corridor</p></div>
+          <div class="feature-card"><div class="feature-icon"><i class="fas fa-bell"></i></div><h3>Alerts</h3><p>Vehicle notifications</p></div>
+          <div class="feature-card"><div class="feature-icon"><i class="fas fa-hospital"></i></div><h3>Hospitals</h3><p>Real-time bed status</p></div>
+          <div class="feature-card"><div class="feature-icon"><i class="fas fa-chart-line"></i></div><h3>AI Prediction</h3><p>Traffic prediction</p></div>
+          <div class="feature-card"><div class="feature-icon"><i class="fas fa-shield-alt"></i></div><h3>Admin Control</h3><p>System management</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container">
+        <h2>Ready to Save Lives?</h2>
+        <a href="#" onclick="showPage('tracking')" class="btn btn-primary btn-large"><i class="fas fa-play-circle"></i> Get Started</a>
+      </div>
+    </section>
+  </div>
+
+  <div id="tracking-page" class="page">
+    <div class="container tracking-container">
+      <div class="tracking-header"><h1>Live Ambulance Tracking</h1><p>Real-time tracking with intelligent traffic management</p></div>
+      <div class="tracking-grid">
+        <div class="map-section"><div id="map"></div></div>
+        <div class="tracking-sidebar">
+          <div class="alert-panel"><h3><i class="fas fa-bell"></i> Alerts</h3><div id="alertsList" class="alerts-list"><p class="no-alerts">No active alerts</p></div></div>
+          <div class="info-panel"><h3><i class="fas fa-ambulance"></i> Ambulance Status</h3><div id="ambulanceInfo" class="info-content"><p>No ambulance selected</p></div></div>
+          <div class="info-panel"><h3><i class="fas fa-traffic-light"></i> Nearby Signals</h3><div id="signalsInfo" class="signals-list"><p>Checking signals...</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="hospitals-page" class="page">
+    <div class="container">
+      <div class="hospitals-header"><h1>Hospital Dashboard</h1><p>Real-time hospital availability</p></div>
+      <div class="hospitals-controls">
+        <input type="text" id="searchInput" placeholder="Search hospitals...">
+        <select id="filterSelect"><option value="all">All Hospitals</option><option value="available">With Beds</option><option value="icu">With ICU</option></select>
+      </div>
+      <div id="hospitalsList" class="hospitals-grid"><p class="loading">Loading hospitals...</p></div>
+    </div>
+  </div>
+
+  <div id="admin-page" class="page">
+    <div class="container admin-container">
+      <div class="admin-header"><h1>Admin Dashboard</h1><p>System management</p></div>
+      <div class="dashboard-stats">
+        <div class="stat-box"><div class="stat-icon ambulance"><i class="fas fa-ambulance"></i></div><div class="stat-content"><h3 id="ambulanceCount">0</h3><p>Ambulances</p></div></div>
+        <div class="stat-box"><div class="stat-icon active"><i class="fas fa-location-arrow"></i></div><div class="stat-content"><h3 id="activeCount">0</h3><p>Active</p></div></div>
+        <div class="stat-box"><div class="stat-icon hospital"><i class="fas fa-hospital"></i></div><div class="stat-content"><h3 id="hospitalCount">0</h3><p>Hospitals</p></div></div>
+        <div class="stat-box"><div class="stat-icon signal"><i class="fas fa-traffic-light"></i></div><div class="stat-content"><h3 id="signalCount">0</h3><p>Signals</p></div></div>
+      </div>
+      <div class="admin-tabs">
+        <button class="tab-btn active" data-tab="overview">Overview</button>
+        <button class="tab-btn" data-tab="ambulances">Ambulances</button>
+        <button class="tab-btn" data-tab="hospitals">Hospitals</button>
+        <button class="tab-btn" data-tab="signals">Signals</button>
+      </div>
+      <div class="tab-content">
+        <div class="tab-pane active" id="overview"><h2>System Overview</h2><div id="recentAlerts" class="recent-items"><p class="loading">Loading...</p></div></div>
+        <div class="tab-pane" id="ambulances"><h2>Ambulances</h2><div id="ambulancesList" class="data-table"><p class="loading">Loading...</p></div></div>
+        <div class="tab-pane" id="hospitals"><h2>Hospitals</h2><div id="hospitalsList" class="data-table"><p class="loading">Loading...</p></div></div>
+        <div class="tab-pane" id="signals"><h2>Signals</h2><div id="signalsList" class="data-table"><p class="loading">Loading...</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer"><p>&copy; 2024 Smart Ambulance Traffic Management System</p></footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
