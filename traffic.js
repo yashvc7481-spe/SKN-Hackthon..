@@ -3,8 +3,7 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
   res.json({
-    message: "Hospital route working",
-    hospitals: []
+    message: "Traffic route working"
   });
 });
 
